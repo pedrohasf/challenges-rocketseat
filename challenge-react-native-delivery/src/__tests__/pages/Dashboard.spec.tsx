@@ -419,7 +419,6 @@ describe('Dashboard', () => {
     await act(async () => {
       fireEvent.changeText(inputSearch, 'Ao molho');
     });
-    debug();
 
     expect(getByText('Ao molho')).toBeTruthy();
 

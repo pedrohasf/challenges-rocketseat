@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
       <FilterContainer>
         <SearchInput
           value={searchValue}
-          onChangeText={value => setSearchValue(value)}
+          onChangeText={setSearchValue}
           placeholder="Qual comida você procura?"
         />
       </FilterContainer>
