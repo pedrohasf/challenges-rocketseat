@@ -38,23 +38,19 @@ const Dashboard: React.FC = () => {
     async function loadTransactions(): Promise<void> {
       const response = await api.get('/transactions');
 
-      setTransactions([...transactions, ...response.data.transactions]);
+      setTransactions([...response.data.transactions]);
       setBalance(response.data.balance);
     }
 
     loadTransactions();
   }, []);
-  const formatDate = (date: Date) => {
+  const formatDate = (date: Date): string => {
     const FormatedDate = JSON.stringify(date).split('-');
     const year = FormatedDate[0].slice(1);
     const month = FormatedDate[1];
     const day = FormatedDate[2].slice(0, 2);
     return `${day}/${month}/${year}`;
   };
-  const numberFormat = new Intl.NumberFormat('pt-br', {
-    style: 'currency',
-    currency: 'BRL',
-  });
 
   return (
     <>
@@ -68,7 +64,7 @@ const Dashboard: React.FC = () => {
                 <img src={income} alt="Income" />
               </header>
               <h1 data-testid="balance-income">
-                {numberFormat.format(Number(balance.income))}
+                {formatValue(Number(balance.income))}
               </h1>
             </Card>
             <Card>
@@ -77,7 +73,7 @@ const Dashboard: React.FC = () => {
                 <img src={outcome} alt="Outcome" />
               </header>
               <h1 data-testid="balance-outcome">
-                {numberFormat.format(Number(balance.outcome))}
+                {formatValue(Number(balance.outcome))}
               </h1>
             </Card>
             <Card total>
@@ -86,7 +82,7 @@ const Dashboard: React.FC = () => {
                 <img src={total} alt="Total" />
               </header>
               <h1 data-testid="balance-total">
-                {numberFormat.format(Number(balance.total))}
+                {formatValue(Number(balance.total))}
               </h1>
             </Card>
           </CardContainer>
@@ -97,16 +93,20 @@ const Dashboard: React.FC = () => {
             <thead>
               <tr>
                 <th>
-                  Título <FiChevronDown />
+                  Título
+                  <FiChevronDown />
                 </th>
                 <th>
-                  Preço <FiChevronDown />
+                  Preço
+                  <FiChevronDown />
                 </th>
                 <th>
-                  Categoria <FiChevronDown />
+                  Categoria
+                  <FiChevronDown />
                 </th>
                 <th>
-                  Data <FiChevronUp color={'#FF872C'} />
+                  Data
+                  <FiChevronUp color="#FF872C" />
                 </th>
               </tr>
             </thead>
@@ -122,7 +122,7 @@ const Dashboard: React.FC = () => {
                       }
                     >
                       {transaction.type === 'income' ? '' : '- '}
-                      {numberFormat.format(transaction.value)}
+                      {formatValue(transaction.value)}
                     </td>
                     <td>{transaction.category.title}</td>
                     <td>{formatDate(transaction.created_at)}</td>
