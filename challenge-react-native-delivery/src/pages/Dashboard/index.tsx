@@ -60,7 +60,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     async function loadFoods(): Promise<void> {
-      if (searchValue && !selectedCategory) {
+      if (searchValue.length && !selectedCategory) {
         const response = await api.get(`foods?name_like=${searchValue}`);
         setFoods(response.data);
         return;
